@@ -71,13 +71,6 @@ usr/bin/sort.exe
 usr/bin/tzset.exe
 usr/bin/uname.exe
 usr/bin/which.exe
-usr/lib/git-core/git-index-pack.exe
-usr/lib/git-core/git-parse-remote
-usr/lib/git-core/git-sh-i18n
-usr/lib/git-core/git-sh-i18n--envsubst.exe
-usr/lib/git-core/git-sh-setup
-usr/lib/git-core/git-submodule
-usr/lib/git-core/git-remote-http.exe
-usr/lib/git-core/git-remote-https.exe
+usr/lib/git-core
 usr/lib/python3.8
 usr/share/git-core/templates/description
