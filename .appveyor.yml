@@ -14,6 +14,7 @@ cache:
 
 install:
   - '%MSYS2_BASH% --login -c "pacman -Syu --noconfirm"'
+  - '%MSYS2_BASH% --login -c "pacman -Syu --noconfirm"'
   - '%MSYS2_BASH% --login -c "pacman -S --noconfirm --needed base-devel msys2-devel gcc"'
   - '%MSYS2_BASH% --login -c "pacman -S --noconfirm --needed python3 python3-pip"'
   - '%MSYS2_BASH% --login -c "pacman -S --noconfirm --needed libffi libffi-devel"'
@@ -25,6 +26,7 @@ install:
   - ps: Get-Process | Where-Object { $_.Path -like "${env:MSYS2_DIR}*" } | Stop-Process
   - '%MSYS2_ASH% -c "/usr/bin/rebaseall -v"'
 
+  - '%MSYS2_BASH% --login -c "python3 -mpip install --upgrade pip"'
   - '%MSYS2_BASH% --login -c "python3 -mpip install ''cryptography==3.3.1''"'
   - '%MSYS2_BASH% --login -c "python3 -mpip install ''pywinrm>=0.3.0''"'
   - '%MSYS2_BASH% --login -c "python3 -mpip install ansible"'
