@@ -74,3 +74,4 @@ usr/bin/which.exe
 usr/lib/git-core
 usr/lib/python3.8
 usr/share/git-core/templates/description
+usr/ssl
