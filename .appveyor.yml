@@ -13,6 +13,8 @@ cache:
   - '%MSYS2_DIR%\var\cache\pacman'
 
 install:
+  - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
+
   - '%MSYS2_BASH% --login -c "pacman -Syu --noconfirm"'
   - '%MSYS2_BASH% --login -c "pacman -Syu --noconfirm"'
   - '%MSYS2_BASH% --login -c "pacman -S --noconfirm --needed base-devel msys2-devel gcc"'
