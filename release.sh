@@ -26,22 +26,23 @@ cd "$TMPDIR"
 echo "Copying files"
 
 mkdir msys64
+mkdir msys64/mingw64
 
 sed 's/\r//g' "$SHARE"/fileList.txt | while read -r filepath || [ -n "$filepath" ]
 do
   # do something with $filepath here
-  rsync --archive --relative --include "*/python3.8/**/ansible/**/test*/" --exclude "*.pyc" --exclude "*/__pycache__" --exclude "*/python3.8/**/test*/" /./${filepath} msys64/
+  rsync --archive --relative --include "*/python3.11/**/ansible/**/test*/" --exclude "*.pyc" --exclude "*/__pycache__" --exclude "*/python3.11/**/test*/" /./${filepath} msys64/
 done
 
 sed 's/\r//g' "$SHARE"/fileList-mingw.txt | while read -r filepath || [ -n "$filepath" ]
 do
   # do something with $filepath here
-  rsync --archive --relative --include "*/python3.8/**/ansible/**/test*/" --exclude "*.pyc" --exclude "*/__pycache__" --exclude "*/python3.8/**/test*/" /mingw64/./${filepath} msys64/
+  rsync --archive --relative --include "*/python3.11/**/ansible/**/test*/" --exclude "*.pyc" --exclude "*/__pycache__" --exclude "*/python3.11/**/test*/" /mingw64/./${filepath} msys64/mingw64/
 done
 
 pushd msys64
 
-strip usr/bin/*.exe usr/lib/git-core/*.exe
+strip usr/bin/*.exe usr/lib/git-core/*.exe mingw64/bin/*.exe
 
 mkdir -p usr/share
 cp -R /usr/share/terminfo ./usr/share/terminfo
@@ -53,8 +54,21 @@ mkdir tmp
 
 mkdir etc
 cp /etc/fstab ./etc/fstab
-cp /etc/msystem ./etc/msystem
+#cp /etc/msystem ./etc/msystem
 cp /etc/profile ./etc/profile
+
+
+# Manual override for MINGW64 - will be sourced by /etc/profile
+cat <<EOF > ./etc/msystem
+export MSYSTEM="MINGW64"
+export MSYSTEM_PREFIX='/mingw64'
+export MSYSTEM_CARCH='x86_64'
+export MSYSTEM_CHOST='x86_64-w64-mingw32'
+export MINGW_CHOST="${MSYSTEM_CHOST}"
+export MINGW_PREFIX="${MSYSTEM_PREFIX}"
+export MINGW_PACKAGE_PREFIX="mingw-w64-${MSYSTEM_CARCH}"
+EOF
+
 
 mkdir -p dev/shm
 

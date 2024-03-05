@@ -13,25 +13,24 @@ cache:
   - '%MSYS2_DIR%\var\cache\pacman'
 
 install:
-  - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
+  #- ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
 
   - '%MSYS2_BASH% --login -c "pacman -Syu --noconfirm"'
   - '%MSYS2_BASH% --login -c "pacman -Syu --noconfirm"'
   - '%MSYS2_BASH% --login -c "pacman -S --noconfirm --needed base-devel msys2-devel gcc"'
-  - '%MSYS2_BASH% --login -c "pacman -S --noconfirm --needed python3 python3-pip"'
   - '%MSYS2_BASH% --login -c "pacman -S --noconfirm --needed libffi libffi-devel"'
-  - '%MSYS2_BASH% --login -c "pacman -S --noconfirm --needed openssl openssl-devel libcrypt libcrypt-devel"'
+  - '%MSYS2_BASH% --login -c "pacman -S --noconfirm --needed openssl openssl-devel libxcrypt libxcrypt-devel"'
   - '%MSYS2_BASH% --login -c "pacman -S --noconfirm --needed libyaml-devel"'
   - '%MSYS2_BASH% --login -c "pacman -S --noconfirm --needed git openssh rsync tar"'
   - '%MSYS2_BASH% --login -c "pacman -S --noconfirm --needed p7zip"'
+  - '%MSYS2_BASH% --login -c "pacman -S --noconfirm --needed mingw-w64-x86_64-python mingw-w64-x86_64-python-pip"'
+  - '%MSYS2_BASH% --login -c "pacman -S --noconfirm --needed mingw-w64-x86_64-python-cryptography mingw-w64-x86_64-python-sspilib"'
 
   - ps: Get-Process | Where-Object { $_.Path -like "${env:MSYS2_DIR}*" } | Stop-Process
   - '%MSYS2_ASH% -c "/usr/bin/rebaseall -v"'
 
-  - '%MSYS2_BASH% --login -c "python3 -mpip install --upgrade pip"'
-  - '%MSYS2_BASH% --login -c "python3 -mpip install ''cryptography==3.3.1''"'
-  - '%MSYS2_BASH% --login -c "python3 -mpip install ''pywinrm>=0.3.0''"'
-  - '%MSYS2_BASH% --login -c "python3 -mpip install ansible"'
+  - '%MSYS2_BASH% --login -c "/mingw64/bin/python3 -mpip install pywinrm"'
+  - '%MSYS2_BASH% --login -c "/mingw64/bin/python3 -mpip install ansible"'
 
   - ps: Get-Process | Where-Object { $_.Path -like "${env:MSYS2_DIR}*" } | Stop-Process
   - '%MSYS2_ASH% -c "/usr/bin/rebaseall -v"'
